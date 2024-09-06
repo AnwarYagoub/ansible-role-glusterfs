@@ -9,13 +9,8 @@
       - software-properties-common
     update_cache: true
     state: present
-  when:
-    - ansible_facts.os_family == "Debian"
 
 - name: Install GlusterFS
-  when:
-    - ansible_facts.os_family == "Debian"
-    - ansible_facts.distribution == "Debian"
   block:
     - name: Install GlusterFS | Download GPG key
       ansible.builtin.get_url:
