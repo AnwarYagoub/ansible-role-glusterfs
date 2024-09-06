@@ -20,9 +20,3 @@
   when:
     - ansible_os_family == 'Debian'
     - ansible_facts.distribution == "Ubuntu"
-
-- name: Ensure GlusterFS is started and enabled at boot.
-  ansible.builtin.service:
-    name: glusterd
-    enabled: true
-    state: started
