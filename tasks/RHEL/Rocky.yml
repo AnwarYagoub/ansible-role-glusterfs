@@ -1,0 +1,27 @@
+---
+
+- name: Install required packages
+  ansible.builtin.dnf:
+    name: lvm2
+    state: present
+
+- name: Install GlusterFS
+  block:
+    - name: Install GlusterFS | Add CentOS Gluster release repository
+      ansible.builtin.package:
+        name: "centos-release-gluster{{ glusterfs_version }}"
+        state: present
+    - name: Install GlusterFS | Install packages
+      ansible.builtin.dnf:
+        name:
+          - glusterfs
+          - glusterfs-libs
+          - glusterfs-server
+        enablerepo: crb
+        state: present
+
+- name: Start & enable GlusterFS service
+  ansible.builtin.service:
+    name: glusterd.service
+    state: started
+    enabled: true

@@ -1,0 +1,47 @@
+---
+
+- name: Install required packages on Debian based systems
+  ansible.builtin.apt:
+    name:
+      - lvm2
+      - xfsprogs
+      - gnupg
+      - software-properties-common
+    update_cache: true
+    state: present
+  when:
+    - ansible_facts.os_family == "Debian"
+
+- name: Install GlusterFS
+  when:
+    - ansible_facts.os_family == "Debian"
+    - ansible_facts.distribution == "Debian"
+  block:
+    - name: Install GlusterFS | Download GPG key
+      ansible.builtin.get_url:
+        url: "https://download.gluster.org/pub/gluster/glusterfs/{{ glusterfs_version }}/rsa.pub"
+        dest: /etc/apt/trusted.gpg.d/gluster.asc
+        owner: root
+        group: root
+        mode: "0644"
+    - name: Install GlusterFS | Import GPG key
+      ansible.builtin.apt_key:
+        file: /etc/apt/trusted.gpg.d/gluster.asc
+        state: present
+    - name: Install GlusterFS | Add GlusterFS repository
+      ansible.builtin.apt_repository:
+        filename: gluster
+        repo: "deb [signed-by=/etc/apt/trusted.gpg.d/gluster.asc] https://download.gluster.org/pub/gluster/glusterfs/{{ glusterfs_version }}/Debian/{{ ansible_distribution_major_version }}/amd64/apt {{ ansible_distribution_release }} main"
+        state: present
+    - name: Install GlusterFS | Install packages
+      ansible.builtin.apt:
+        name:
+          - glusterfs-server
+        update_cache: true
+        state: present
+
+- name: Start & enable GlusterFS service
+  ansible.builtin.service:
+    name: glusterd.service
+    state: started
+    enabled: true

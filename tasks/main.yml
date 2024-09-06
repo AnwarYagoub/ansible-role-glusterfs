@@ -1,0 +1,28 @@
+---
+
+- name: Include tasksfor Rocky
+  ansible.builtin.include_tasks:
+    file: RHEL/Rocky.yml
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_facts.distribution == "Rocky"
+
+- name: Include tasksfor Debian
+  ansible.builtin.include_tasks:
+    file: Debian/Debian.yml
+  when:
+    - ansible_os_family == 'Debian'
+    - ansible_facts.distribution == "Debian"
+
+- name: Include tasksfor Ubuntu
+  ansible.builtin.include_tasks:
+    file: Debian/Ubuntu.yml
+  when:
+    - ansible_os_family == 'Debian'
+    - ansible_facts.distribution == "Ubuntu"
+
+- name: Ensure GlusterFS is started and enabled at boot.
+  ansible.builtin.service:
+    name: glusterd
+    enabled: true
+    state: started
