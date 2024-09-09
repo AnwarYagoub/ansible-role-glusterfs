@@ -1,0 +1,7 @@
+- name: Verify
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Check port 24007
+      ansible.builtin.wait_for:
+        port: 24007
