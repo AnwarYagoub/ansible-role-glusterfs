@@ -41,9 +41,9 @@ jobs:
     strategy:
       matrix:
         distro:
-          # - rockylinux9
+          - rockylinux9
           - ubuntu2404
-          # - debian12
+          - debian12
 
     steps:
       - name: Check out the codebase.
