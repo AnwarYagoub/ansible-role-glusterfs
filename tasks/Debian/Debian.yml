@@ -26,7 +26,7 @@
     - name: Install GlusterFS | Add GlusterFS repository
       ansible.builtin.apt_repository:
         filename: gluster
-        repo: "deb [signed-by=/etc/apt/trusted.gpg.d/gluster.asc] https://download.gluster.org/pub/gluster/glusterfs/{{ glusterfs_version }}/Debian/{{ ansible_distribution_major_version }}/amd64/apt {{ ansible_distribution_release }} main"
+        repo: "deb [signed-by=/etc/apt/trusted.gpg.d/gluster.asc] https://download.gluster.org/pub/gluster/glusterfs/{{ glusterfs_version }}/LATEST/Debian/{{ ansible_distribution_major_version }}/amd64/apt {{ ansible_distribution_release }} main"
         state: present
     - name: Install GlusterFS | Install packages
       ansible.builtin.apt:
