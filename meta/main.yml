@@ -2,7 +2,7 @@ dependencies: []
 
 galaxy_info:
   role_name: glusterfs
-  namespace: anwaryagoub
+  namespace: AnwarYagoub
   author: Anwar Yagoub
   description: GlusterFS installation for Linux
   company: N/A
