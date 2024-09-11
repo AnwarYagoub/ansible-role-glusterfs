@@ -3,8 +3,6 @@
 - name: Install required packages on Debian based systems
   ansible.builtin.apt:
     name:
-      - lvm2
-      - xfsprogs
       - gnupg
       - software-properties-common
     update_cache: true
